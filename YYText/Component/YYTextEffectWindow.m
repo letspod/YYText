@@ -259,6 +259,9 @@
         return rotation;
     }
     
+    if (captureRect.size.width <= 0 || captureRect.size.height <= 0) {
+        return rotation;
+    }
     UIGraphicsBeginImageContextWithOptions(captureRect.size, NO, 0);
     CGContextRef context = UIGraphicsGetCurrentContext();
     if (!context) return rotation;

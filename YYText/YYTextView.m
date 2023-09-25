@@ -389,12 +389,16 @@ typedef NS_ENUM(NSUInteger, YYTextMoveDirection) {
         CGSize size = [layout textBoundingSize];
         BOOL needDraw = size.width > 1 && size.height > 1;
         if (needDraw) {
-            UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-            CGContextRef context = UIGraphicsGetCurrentContext();
-            [layout drawInContext:context size:size debug:self.debugOption];
-            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            _placeHolderView.image = image;
+            if (size.width > 0 && size.height > 0 ){
+                 UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+                CGContextRef context = UIGraphicsGetCurrentContext();
+                [layout drawInContext:context size:size debug:self.debugOption];
+                UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+                _placeHolderView.image = image;
+            } else {
+                _placeHolderView.image = NULL;
+            }
             frame.size = image.size;
             if (container.isVerticalForm) {
                 frame.origin.x = self.bounds.size.width - image.size.width;
